@@ -1,0 +1,15 @@
+import empleados.*
+import empresa.*
+
+
+describe "empleados"{
+	const agustin = new PlantaPermanente(nombre="agustin", direccion="caseros", estadoCivil = "Casado", fechaNac = 1998, sueldoBasico= 20000, antiguedad = 2, cantHijos = 2)
+	const martin = new PlantaTemporaria(nombre="martin", direccion="caseros", estadoCivil = "Casado", fechaNac = 1948, sueldoBasico= 20000, horasExtra = 10, fechaFin = 10)
+	
+	test "Calcular sueldo de Agustin" {
+		assert.equals(15648.5, agustin.calcularSueldo())
+	}
+	test "Calcular sueldo de Martin" {
+		assert.equals(16451.5, martin.calcularSueldo())
+	}	
+}
