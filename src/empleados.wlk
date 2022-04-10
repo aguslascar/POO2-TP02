@@ -1,4 +1,5 @@
 import empresa.*
+import reciboHaberes.*
 
 class Empleado {
 	
@@ -7,25 +8,25 @@ class Empleado {
 	const property estadoCivil
 	const property fechaNac
 	const property sueldoBasico
-	
-	method anioActual() {
-		return 2022
-	}
+	const hoy = new Date()
 	
 	method edad() {
-		return self.anioActual() - fechaNac
+		return (hoy - fechaNac) / 365
 	}
 	
-	method calcularSueldo() 
+	method sueldoNeto() 
 	method sueldoBruto()
 	method retenciones(sueldoBruto)
+	method generarRecibo() {
+		const recibo = new Recibo(nombreEmpleado = nombre, direccion = direccion, fechaEmision = hoy, sueldoBruto = self.sueldoBruto(), sueldoNeto = self.sueldoNeto(), desgloce = "")
+	}
 }
 
 class PlantaPermanente inherits Empleado {
 	const property cantHijos
 	const property antiguedad
 	
-	override method calcularSueldo() {
+	override method sueldoNeto() {
 		return self.retenciones(self.sueldoBruto())
 	}
 	
@@ -62,7 +63,7 @@ class PlantaTemporaria inherits Empleado {
 	const property fechaFin
 	const property horasExtra
 	
-	override method calcularSueldo() {
+	override method sueldoNeto() {
 		return self.retenciones(self.sueldoBruto()) 
 	}
 	

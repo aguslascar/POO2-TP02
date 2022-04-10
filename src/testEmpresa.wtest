@@ -2,15 +2,23 @@ import empleados.*
 import empresa.*
 
 
-describe "empleados"{
+describe "empresa"{
 	
 	const agustin = new PlantaPermanente(nombre="agustin", direccion="caseros", estadoCivil = "Casado", fechaNac = new Date(day = 08, month = 01, year = 1998), sueldoBasico= 20000, antiguedad = 2, cantHijos = 2)
 	const martin = new PlantaTemporaria(nombre="martin", direccion="caseros", estadoCivil = "Casado", fechaNac = new Date(day=18,month=10, year= 1948), sueldoBasico= 20000, horasExtra = 10, fechaFin = 10)
 	
-	test "Calcular sueldo de Agustin" {
-		assert.equals(15648.5, agustin.sueldoNeto())
+	const google = new Empresa(nombre = "google", cuit = 123456)
+	
+	
+	method initialize() {
+		google.agregarEmpleado(agustin)
+		google.agregarEmpleado(martin)
 	}
-	test "Calcular sueldo de Martin" {
-		assert.equals(16451.5, martin.sueldoNeto())
-	}	
+	
+	test "Calculo sueldos y retenciones" {
+
+	assert.equals(40900, google.totalSueldoBruto())
+	assert.equals(32100, google.totalPagoSueldos())
+ }
+
 }
