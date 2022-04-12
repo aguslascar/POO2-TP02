@@ -13,4 +13,12 @@ describe "empleados"{
 	test "Calcular sueldo de Martin" {
 		assert.equals(16451.5, martin.sueldoNeto())
 	}	
+	test "Comprobar recibos" {
+		//Genero un recibo para Agustin
+		agustin.generarRecibo()
+		//Compruebo que Agustin tenga recibo.
+		assert.that(agustin.tieneRecibo())
+		//Compruebo que Martin no tiene un recibo generado
+		assert.notThat(martin.tieneRecibo())
+	}
 }

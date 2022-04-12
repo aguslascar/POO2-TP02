@@ -26,5 +26,7 @@ class Empresa {
 	method liquidarSueldos() {
 		empleados.forEach{empleado => empleado.generarRecibo()}
 	}
-	
+	method todosTienenRecibo() {
+		return empleados.all{empleado => empleado.tieneRecibo()}
+	}	
 }

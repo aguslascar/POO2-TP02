@@ -13,12 +13,19 @@ describe "empresa"{
 	method initialize() {
 		google.agregarEmpleado(agustin)
 		google.agregarEmpleado(martin)
+		
 	}
 	
 	test "Calculo sueldos y retenciones" {
 
-	assert.equals(40900, google.totalSueldoBruto())
-	assert.equals(32100, google.totalPagoSueldos())
- }
+		assert.equals(40900, google.totalSueldoBruto())
+		assert.equals(32100, google.totalPagoSueldos())
+		assert.equals(8800, google.totalRetenciones())
+ 	}
+ 	
+ 	test "Liquidacion" {
+ 		google.liquidarSueldos()
+ 		assert.that(google.todosTienenRecibo())
+ 	}
 
 }

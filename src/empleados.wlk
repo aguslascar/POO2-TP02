@@ -8,18 +8,39 @@ class Empleado {
 	const property estadoCivil
 	const property fechaNac
 	const property sueldoBasico
-	const hoy = new Date()
+	const fechaActual = new Date()
+	var recibo = null
 	
 	method edad() {
-		return (hoy - fechaNac) / 365
+		// Al restar la fecha de nacimiento a la fecha actual, me da un numero que es la cantidad de dias que tiene la persona. 
+		// PAra calcular la cantidad de años, divido esos dias por 365.25 que contempla los años bisiestos.
+		return (fechaActual - fechaNac) / 365.25
 	}
 	
 	method sueldoNeto() 
 	method sueldoBruto()
 	method retenciones(sueldoBruto)
 	method generarRecibo() {
-		const recibo = new Recibo(nombreEmpleado = nombre, direccion = direccion, fechaEmision = hoy, sueldoBruto = self.sueldoBruto(), sueldoNeto = self.sueldoNeto(), desgloce = "")
+		//En la parte de desgloce, no puse ningun valor ya que no comprendi exactamente que es lo que habria que poner.
+		recibo = new Recibo(nombreEmpleado = nombre, direccion = direccion, fechaEmision = fechaActual, sueldoBruto = self.sueldoBruto(), sueldoNeto = self.sueldoNeto(), desgloce = "")
+		
 	}
+	
+	method tieneRecibo() {
+		return recibo != null
+	}
+	/* method retornarRecibo() {
+		//Compruebo que el empleado tenga un recibo generado
+		self.comprobarRecibo()
+		return recibo
+	}
+	
+	method comprobarRecibo() {
+		if(recibo == null) {
+			self.error("No se genero un recibo")
+		}
+	}
+	*/
 }
 
 class PlantaPermanente inherits Empleado {

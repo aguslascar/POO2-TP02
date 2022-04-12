@@ -10,6 +10,4 @@ class Recibo {
 	const property sueldoNeto
 	const property desgloce
 	
-	
-	
 }
