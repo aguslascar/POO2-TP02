@@ -6,6 +6,8 @@ describe "empresa"{
 	
 	const agustin = new PlantaPermanente(nombre="agustin", direccion="caseros", estadoCivil = "Casado", fechaNac = new Date(day = 08, month = 01, year = 1998), sueldoBasico= 20000, antiguedad = 2, cantHijos = 2)
 	const martin = new PlantaTemporaria(nombre="martin", direccion="caseros", estadoCivil = "Casado", fechaNac = new Date(day=18,month=10, year= 1948), sueldoBasico= 20000, horasExtra = 10, fechaFin = 10)
+	//Ej2 - Jorge
+	const jorge = new Contratado(nombre="jorge", direccion="caseros", estadoCivil="Soltero", fechaNac = new Date(day=22, month=04, year=1985), sueldoBasico= 15000, numContrato=347, medioPago ="transferencia")
 	
 	const google = new Empresa(nombre = "google", cuit = 123456)
 	
@@ -13,14 +15,16 @@ describe "empresa"{
 	method initialize() {
 		google.agregarEmpleado(agustin)
 		google.agregarEmpleado(martin)
+		//Ej2 - Jorge
+		google.agregarEmpleado(jorge)
 		
 	}
 	
 	test "Calculo sueldos y retenciones" {
 
-		assert.equals(40900, google.totalSueldoBruto())
-		assert.equals(32100, google.totalPagoSueldos())
-		assert.equals(8800, google.totalRetenciones())
+		assert.equals(55900, google.totalSueldoBruto())
+		assert.equals(43530, google.totalPagoSueldos())
+		assert.equals(12370, google.totalRetenciones())
  	}
  	
  	test "Liquidacion" {

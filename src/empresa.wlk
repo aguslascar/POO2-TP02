@@ -20,7 +20,7 @@ class Empresa {
 	}
 	
 	method totalRetenciones() {
-		return self.totalSueldoBruto() - self.totalPagoSueldos()
+		return empleados.sum{empleado => empleado.retenciones()}
 	}
 	
 	method liquidarSueldos() {

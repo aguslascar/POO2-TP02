@@ -1,6 +1,8 @@
 import empresa.*
 import reciboHaberes.*
 
+//Ejercicio 1
+
 class Empleado {
 	
 	const property nombre
@@ -13,13 +15,20 @@ class Empleado {
 	
 	method edad() {
 		// Al restar la fecha de nacimiento a la fecha actual, me da un numero que es la cantidad de dias que tiene la persona. 
-		// PAra calcular la cantidad de años, divido esos dias por 365.25 que contempla los años bisiestos.
+		// Para calcular la cantidad de años, divido esos dias por 365.25 que contempla los años bisiestos.
 		return (fechaActual - fechaNac) / 365.25
 	}
 	
 	method sueldoNeto() 
 	method sueldoBruto()
-	method retenciones(sueldoBruto)
+	method retenciones()
+	method retencionOS() {
+		//Retencion obra social
+		return 0.10
+	}
+	
+	method retencionAportes() 
+	
 	method generarRecibo() {
 		//En la parte de desgloce, no puse ningun valor ya que no comprendi exactamente que es lo que habria que poner.
 		recibo = new Recibo(nombreEmpleado = nombre, direccion = direccion, fechaEmision = fechaActual, sueldoBruto = self.sueldoBruto(), sueldoNeto = self.sueldoNeto(), desgloce = "")
@@ -29,18 +38,6 @@ class Empleado {
 	method tieneRecibo() {
 		return recibo != null
 	}
-	/* method retornarRecibo() {
-		//Compruebo que el empleado tenga un recibo generado
-		self.comprobarRecibo()
-		return recibo
-	}
-	
-	method comprobarRecibo() {
-		if(recibo == null) {
-			self.error("No se genero un recibo")
-		}
-	}
-	*/
 }
 
 class PlantaPermanente inherits Empleado {
@@ -48,7 +45,7 @@ class PlantaPermanente inherits Empleado {
 	const property antiguedad
 	
 	override method sueldoNeto() {
-		return self.retenciones(self.sueldoBruto())
+		return self.sueldoBruto() - self.retenciones()
 	}
 	
 	override method sueldoBruto() {
@@ -74,8 +71,16 @@ class PlantaPermanente inherits Empleado {
 		
 	}
 	
-	override method retenciones(sueldoBruto) {
-		return ((sueldoBruto * 0.90) - 20 * cantHijos) * 0.85
+	override method retenciones() {
+		return self.sueldoBruto() * (self.retencionOS() + self.retencionAportes()) + self.retencionHijo(cantHijos)
+	}
+	
+	override method retencionAportes() {
+		return 0.15
+	}
+	
+	method retencionHijo(cantidad) {
+		return 20 * cantidad
 	}
 	
 }
@@ -85,20 +90,61 @@ class PlantaTemporaria inherits Empleado {
 	const property horasExtra
 	
 	override method sueldoNeto() {
-		return self.retenciones(self.sueldoBruto()) 
+		return self.sueldoBruto() - self.retenciones() 
 	}
 	
 	override method sueldoBruto() {
 		return sueldoBasico + horasExtra * 40
 	}
 	
-	override method retenciones(sueldoBruto) {
-		return ((sueldoBruto * 0.90) - self.retencionMayorCincuenta()) * 0.90 - (5 * horasExtra)
+	override method retenciones() {
+		return self.sueldoBruto() * (self.retencionOS() + self.retencionAportes()) + self.retencionMayorCincuenta() + self.retencionHsExtra(horasExtra)
 	}
 	method retencionMayorCincuenta() {
 		if(self.edad() > 50) {
 			return 25
 		}
 		else return 0
+	}
+	
+	override method retencionAportes() {
+		return 0.10
+	}
+	method retencionHsExtra(cantHoras) {
+		return 5 * cantHoras
+	}
+}
+
+//Ejercicio 2 
+
+/*c) Para realizar esta extensión del modelo, ¿necesitó modificar la clase Empresa? ¿Por qué?
+ * 
+ * No debo modificar la clase Empresa, ya que como estoy utilizando la herencia y el polimorfismo para cada tipo de empleado,
+ * todos los tipos de empleados entienden los mismos mensajes. 
+ */
+
+class Contratado inherits Empleado {
+	const property numContrato
+	const property medioPago
+	
+	override method sueldoBruto() {
+		return sueldoBasico
+	}
+	
+	override method sueldoNeto() {
+		return self.sueldoBruto() - self.retenciones()
+	}
+	
+	override method retenciones() {
+		return self.sueldoBruto() * (self.retencionOS() + self.retencionAportes()) + self.gastosAdministrativos()
+	}
+	
+	override method retencionAportes() {
+		//Aca no me quedo claro cuanto seria la retencion por aportes del empleado contratado asi que utilice el mismo valor que PlantaTemporaria
+		return 0.10
+	}
+	
+	method gastosAdministrativos() {
+		return 50
 	}
 }
